@@ -1,12 +1,30 @@
 import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
 
-Vue.config.productionTip = false;
+import "./style.css";
+
+//Fake backend
+import { fakeBackend } from "./_helpers";
+fakeBackend();
+
+import {
+    initFacebookSdk,
+    jwtInterceptor,
+    errorInterceptor,
+    router
+} from "./_helpers";
+import { App } from "./App.vue";
+
+//Enable interceptors for HTTP requests
+jwtInterceptor();
+errorInterceptor();
+
+//Wait fro facebook sdk to start app
+initFacebookSdk();
+
+//Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount("#app");
