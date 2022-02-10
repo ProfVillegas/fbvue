@@ -10,21 +10,22 @@ import {
     initFacebookSdk,
     jwtInterceptor,
     errorInterceptor,
-    router
+    router,
 } from "./_helpers";
-import { App } from "./App.vue";
+import App from "./App.vue";
 
 //Enable interceptors for HTTP requests
 jwtInterceptor();
 errorInterceptor();
 
 //Wait fro facebook sdk to start app
-initFacebookSdk();
+initFacebookSdk().then(starApp);
 
 //Vue.config.productionTip = false;
 
-new Vue({
-    router,
-    store,
-    render: (h) => h(App),
-}).$mount("#app");
+function starApp() {
+    new Vue({
+        router,
+        render: (h) => h(App),
+    }).$mount("#app");
+}
